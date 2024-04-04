@@ -1,0 +1,60 @@
+.container-upload {
+	padding-bottom: 20px;
+	margin-top: 10px;
+	border-radius: 5px;
+}
+.center {
+	text-align: center;
+}
+#top {
+	margin-top: 20px;
+}
+.btn-container {
+	border-radius: 5px;
+	padding-bottom: 20px;
+	margin-bottom: 20px;
+}
+/*these two are set to not display at start*/
+.imgupload.ok {
+	display: none;
+	color: green;
+}
+.imgupload.stop {
+	display: none;
+	color: red;
+}
+#fileup {
+	opacity: 0;
+	-moz-opacity: 0;
+	filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0);
+	width: 200px;
+	cursor: pointer;
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	bottom: 40px;
+	height: 50px;
+}
+
+/*switch between input and not active input*/
+#submitbtn {
+	padding: 5px 50px;
+	display: none;
+}
+#fakebtn {
+	padding: 5px 40px;
+}
+
+/*www.emilianocostanzo.com*/
+#sign {
+	color: #1e2832;
+	position: fixed;
+	right: 10px;
+	bottom: 10px;
+	text-shadow: 0px 0px 0px #1e2832;
+	transition: all.3s;
+}
+#sign:hover {
+	color: #1e2832;
+	text-shadow: 0px 0px 5px #1e2832;
+}

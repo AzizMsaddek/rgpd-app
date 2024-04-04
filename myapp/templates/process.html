@@ -1,0 +1,81 @@
+{% extends 'base.html' %} 
+{% load static %} {% block head%}
+<link rel="stylesheet" href="{% static 'upload-style.css' %}" /> 
+{% endblock %} 
+
+{% block content %} 
+<style>
+	.centered {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		height: 100vh;
+	}
+	.hidden {
+		display: none;
+	}
+	#loadingMessage {
+    justify-content: center;
+    align-items: center;
+}
+
+</style>
+
+<div class="centered">
+	<h3 id="loadingMessage">Traitement en cours</h3>
+	<div class="dot-typing" style="margin-top: 20px"></div>
+	<br>
+	<div id="downloadButton" class="hidden">
+        <button class="btn" onclick="downloadFile()">Télécharger</button>
+    </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        console.log('Processing began');
+        // Make an AJAX request to initiate the data processing
+        var xhr = new XMLHttpRequest();
+        var processDataURL = "{% url 'process_data_ajax' %}";
+        xhr.open('GET', processDataURL);
+
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                // Data processing completed, update the message and show the download button
+                document.getElementById('loadingMessage').innerText =
+                    'Traitement terminé\n\nVotre fichier est prêt !';
+				document.getElementById('loadingMessage').style.textAlign = 'center'; // Center the text horizontally
+                document.querySelector('.dot-typing').classList.add('hidden');
+                document.getElementById('downloadButton').classList.remove('hidden');
+                // Redirect to the success page or perform any other actions
+                console.log('SUCCESS - Data processing complete!');
+            } else {
+                // Handle error cases
+                console.error('Data processing failed. Status:', xhr.status);
+            }
+        };
+
+        xhr.send();
+    });
+
+    function downloadFile() {
+        var downloadXhr = new XMLHttpRequest();
+        downloadXhr.open('GET', "{% url 'download_output_file' %}", true);
+        downloadXhr.responseType = 'blob';
+        downloadXhr.onload = function () {
+            var blob = downloadXhr.response;
+            var link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.download = 'Formulaires_RGPD.xlsx';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        };
+        downloadXhr.send();
+
+		// Redirect to the file upload page after 5 seconds
+        setTimeout(function () {
+            window.location.href = "{% url 'fileup' %}";
+        }, 2000);
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,119 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>{% block title %}RGPD App{% endblock %}</title>
+		<link
+			rel="icon"
+			type="image/x-icon"
+			href="{% static 'navbar/favicon.png' %}"
+		/>
+
+		<link rel="stylesheet" href="{% static 'navbar/style.css' %}" />
+		<link rel="stylesheet" href="{% static 'spinner.css' %}" />
+		<link rel="stylesheet" href="{% static 'back-to-top-button/style.css' %}" />
+
+
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css"
+		/>
+
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/waves/0.7.5/waves.min.css" />
+		<link rel="stylesheet" href="https://codepen.io/orangtanah/pen/zzYeNb.css" />
+
+		{% block head %} {% endblock %}
+	</head>
+	<style>
+		body{
+			font-family: 'Poppins', sans-serif;
+		}
+		.centered-title {
+		position: absolute;
+		top: 50%; /* Position vertically at 50% from the top */
+		left: 0; /* Position horizontally at the left edge */
+		width: 100%; /* Take full width of the parent */
+		text-align: center; /* Center the text horizontally */
+		transform: translateY(-50%); /* Adjust for vertical centering */
+		}
+
+		.navbar-title {
+		font-size: 18px; /* Adjust as needed */
+		font-weight: bold; /* Adjust as needed */
+		color: #333; /* Adjust color as needed */
+		font-family: 'Poppins', sans-serif; /* Ensure fallback font */
+		}
+	</style>
+	<body>
+		<div class="navigation-wrap bg-light start-header start-style">
+			<div class="container">
+				<div class="row">
+					<div class="col-12">
+						<nav class="navbar navbar-expand-md navbar-light">
+							<a
+								class="navbar-brand"
+								href="/"
+								><img src="{% static 'navbar/logo.png' %}" alt=""
+							/></a>
+							
+
+							<div class="centered-title navbar-brand">
+								<span class="navbar-title">Outil d'analyse risques RGPD Daxium</span>
+							</div>
+
+							<button
+								class="navbar-toggler"
+								type="button"
+								data-toggle="collapse"
+								data-target="#navbarSupportedContent"
+								aria-controls="navbarSupportedContent"
+								aria-expanded="false"
+								aria-label="Toggle navigation"
+							>
+								<span class="navbar-toggler-icon"></span>
+							</button>
+
+							<div class="collapse navbar-collapse" id="navbarSupportedContent">
+								<ul class="navbar-nav ml-auto py-4 py-md-0">
+									{% if not user.is_authenticated %}
+									<li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+										<a class="nav-link" href="/login">Connexion</a>
+									</li>
+									{% endif %} {% if user.is_authenticated %}
+									<li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+										<a class="nav-link" href="/">Acceuil</a>
+									</li>
+									{% endif %}
+									
+									{% if user.is_authenticated %}
+									<li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+										<a class="nav-link" href="{% url 'logout' %}">Déconnexion</a>
+									</li>
+									{% endif %}
+								</ul>
+								
+							</div>
+						</nav>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="section full-height">
+			<div class="absolute-center">
+				<div class="section">{% block content %}{% endblock %}</div>
+			</div>
+			<button class="back-to-top" type="button"></button>
+		</div>
+
+		{% block scripts %}
+		<script src="{% static 'login/vendor/jquery/jquery.min.js' %}"></script>
+		<script src="{% static 'navbar/script.js' %}"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+		<!-- Back to top button -->
+		<script  src="{% static 'back-to-top-button/script.js' %}"></script>
+		<script src="https://cdn.jsdelivr.net/waves/0.7.5/waves.min.js"></script>
+		{% endblock %}
+	</body>
+</html>
